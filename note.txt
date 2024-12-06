@@ -1,0 +1,7 @@
+where to begin:
+AddFamiles.jsx => react-s3 integration done , isnt working as expected. buffer error solved new error when changes in handelSubmit()
+
+what did i just do:
+removed family data fetching from FamilyTree.js to the Context and everything is comming from context now 😎😎, checking if profile is working or not
+Profile section working properly 👍👍👍 did some changes in the mapping through all data
+fixed those green rectnagle for names and got proper DOB
