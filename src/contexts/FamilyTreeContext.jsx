@@ -7,7 +7,8 @@ export const FamilyTreeProvider = ({ children }) => {
   const [showAddFamiliesForm, setShowAddFamiliesForm] = useState(false); // Track form visibility
   const [selectedParentNode, setSelectedParentNode] = useState(null); // Track selected parent node
   const [loading, setLoading] = useState(true);
-
+  const backendApiUrl = "http://3.109.211.23:3000";
+  // const backendApiUrl = "http://localhost:3000";
   const [token, setToken] = useState(localStorage.getItem("token" || ""));
   const [familyTreeExist, setFamilyTreeExist] = useState(false);
   const [familyTreeData, setFamilyTreeData] = useState(() => {
@@ -33,7 +34,7 @@ export const FamilyTreeProvider = ({ children }) => {
         };
 
         const response = await axios.get(
-          "https://family-tree-backend-om.onrender.com/api/families",
+          `${backendApiUrl}/api/families`,
           config
         );
         console.log("Fetched family tree data:", response.data);
@@ -71,6 +72,7 @@ export const FamilyTreeProvider = ({ children }) => {
         setShowAddFamiliesForm,
         loading,
         setLoading,
+        backendApiUrl,
       }}
     >
       {children}

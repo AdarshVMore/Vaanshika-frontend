@@ -103,10 +103,7 @@ const FamilyTree = ({ token }) => {
 
         console.log("Fetching with config", config);
 
-        const response = await axios.get(
-          "https://family-tree-backend-om.onrender.com/api/families",
-          config
-        );
+        const response = await axios.get(`${Backend_api}/api/families`, config);
 
         // setFamilyTreeData(response.data);
         setFamilyTreeData(response.data);
@@ -159,7 +156,7 @@ const FamilyTree = ({ token }) => {
 
     try {
       const response = await axios.post(
-        "https://family-tree-backend-om.onrender.com/api/families",
+        `${Backend_api}/api/families`,
         formData,
         { withCredentials: true }
       );

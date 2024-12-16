@@ -43,7 +43,7 @@ const renderCustomNodeElement = ({
 
   return (
     <g>
-      {nodeDatum.attributes?.image ? (
+      {/* {nodeDatum.attributes?.image ? (
         <image
           href={`https://family-tree-adarsh.s3.amazonaws.com/${nodeDatum.attributes.image}`}
           width="300"
@@ -52,7 +52,7 @@ const renderCustomNodeElement = ({
           y="-320"
           alt="Node image"
         />
-      ) : null}
+      ) : null} */}
 
       <rect
         width={rectWidth}
@@ -137,6 +137,7 @@ const FamilyTree = () => {
     setLoading,
     setSelectedParentNode,
     setShowAddFamiliesForm,
+    backendApiUrl,
   } = useContext(FamilyTreeContext);
   // const [showAddForm, setShowAddForm] = useState(false);
 
@@ -153,7 +154,7 @@ const FamilyTree = () => {
   //       };
 
   //       const response = await axios.get(
-  //         "https://family-tree-backend-om.onrender.com/api/families",
+  //         "Backend_api/api/families",
   //         config
   //       );
   //       console.log("Fetched family tree data:", response.data);
@@ -240,7 +241,7 @@ const FamilyTree = () => {
       };
 
       const response = await axios.post(
-        "https://family-tree-backend-om.onrender.com/api/families",
+        `${backendApiUrl}/api/families`,
         familyTreeData,
         config
       );
@@ -282,14 +283,20 @@ const FamilyTree = () => {
       id="treeWrapper"
       className="w-full h-screen bg-black overflow-hidden relative"
     >
-      <h1 className="text-white text-sm lg:text-xl font-bold text-left mt-32 lg:mt-28 ml-5 lg:ml-20">
-        {
-          familyTreeData.name.split(" ")[
-            familyTreeData.name.split(" ").length - 1
-          ]
-        }{" "}
-        Family
-      </h1>
+      {familyTreeData ? (
+        <>
+          <h1 className="text-white text-sm lg:text-xl font-bold text-left mt-32 lg:mt-28 ml-5 lg:ml-20">
+            {
+              familyTreeData.name.split(" ")[
+                familyTreeData.name.split(" ").length - 1
+              ]
+            }{" "}
+            Family
+          </h1>
+        </>
+      ) : (
+        ""
+      )}
       {familyTreeData && (
         <Tree
           data={familyTreeData} // Tree data

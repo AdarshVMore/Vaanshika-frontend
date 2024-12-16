@@ -3,14 +3,15 @@ import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import { FamilyTreeContext } from "../contexts/FamilyTreeContext";
 
-const s3 = new AWS.S3();
+// const s3 = new AWS.S3();
 const AddFamilies = ({
   onAddNewMember,
   parentNode,
   setShowAddFamiliesForm,
   familyTreeExist,
 }) => {
-  const { token, familyTreeData } = useContext(FamilyTreeContext);
+  const { token, familyTreeData, backendApiUrl } =
+    useContext(FamilyTreeContext);
   const [formData, setFormData] = useState({
     image: [],
     name: "",
@@ -63,24 +64,24 @@ const AddFamilies = ({
     return false;
   };
 
-  const handleImageUpload = async (file) => {
-    try {
-      const params = {
-        Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
-        Key: file.name,
-        Body: file,
-        ContentType: file.type,
-        ACL: "public-read", // Optional: adjust based on your bucket policy
-      };
+  // const handleImageUpload = async (file) => {
+  //   try {
+  //     const params = {
+  //       Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
+  //       Key: file.name,
+  //       Body: file,
+  //       ContentType: file.type,
+  //       ACL: "public-read", // Optional: adjust based on your bucket policy
+  //     };
 
-      const data = await s3.upload(params).promise();
-      console.log("File uploaded successfully:", data.Location);
-      return data.Location; // Return the URL of the uploaded file
-    } catch (error) {
-      console.error("Error uploading to S3:", error);
-      throw error;
-    }
-  };
+  //     // const data = await s3.upload(params).promise();
+  //     console.log("File uploaded successfully:", data.Location);
+  //     return data.Location; // Return the URL of the uploaded file
+  //   } catch (error) {
+  //     console.error("Error uploading to S3:", error);
+  //     throw error;
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     console.log(token);
@@ -111,18 +112,18 @@ const AddFamilies = ({
           console.log("image is ", selectedImages);
 
           // Append image separately
-          if (selectedImages) {
-            try {
-              // const imageUrl = await uploadFile(selectedImages);
-              // formDataPayload.append("image", imageUrl);
-              S3FileUpload.uploadFile(selectedImages, s3Config)
-                .then((data) => console.log(data))
-                .catch((err) => console.error(err));
-            } catch (error) {
-              console.error("Image upload failed", error);
-              return;
-            }
-          }
+          // if (selectedImages) {
+          //   try {
+          //     // const imageUrl = await uploadFile(selectedImages);
+          //     // formDataPayload.append("image", imageUrl);
+          //     S3FileUpload.uploadFile(selectedImages, s3Config)
+          //       .then((data) => console.log(data))
+          //       .catch((err) => console.error(err));
+          //   } catch (error) {
+          //     console.error("Image upload failed", error);
+          //     return;
+          //   }
+          // }
 
           // Append other attributes as JSON string
           formDataPayload.append(
@@ -151,7 +152,7 @@ const AddFamilies = ({
             };
 
             const response = await axios.post(
-              "https://family-tree-backend-om.onrender.com/api/families/addChild",
+              `${backendApiUrl}/api/families/addChild`,
               formDataPayload,
               config
             );

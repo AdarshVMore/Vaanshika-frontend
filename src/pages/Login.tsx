@@ -10,7 +10,8 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // Initialize useNavigate hook
-  const { token, setToken } = useContext(FamilyTreeContext);
+  const { token, setToken, backendApiUrl } = useContext(FamilyTreeContext);
+  console.log(backendApiUrl); // Should print the URL if configured correctly
 
   // Function to handle toggle between login and sign up
   const handleToggle = () => {
@@ -25,7 +26,7 @@ const LoginPage = () => {
       if (isSignUp) {
         // Sign Up Request
         const response = await axios.post(
-          "https://family-tree-backend-om.onrender.com/api/auth/register",
+          `${backendApiUrl}/api/auth/register`,
           {
             username,
             email,
@@ -36,13 +37,10 @@ const LoginPage = () => {
         // Optionally handle post-signup actions
       } else {
         // Login Request
-        const response = await axios.post(
-          "https://family-tree-backend-om.onrender.com/api/auth/login",
-          {
-            email,
-            password,
-          }
-        );
+        const response = await axios.post(`${backendApiUrl}/api/auth/login`, {
+          email,
+          password,
+        });
         setToken(response.data.token);
         console.log(token);
         console.log("Login Success:", response.data.token, response);
