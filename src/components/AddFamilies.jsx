@@ -243,7 +243,7 @@ const AddFamilies = ({
                   isDragActive ? "border-green-500" : "border-green-300"
                 }`}
               >
-                <input {...getInputProps()} disabled />
+                <input {...getInputProps()} />
                 {isDragActive ? (
                   <p className="text-green-600">Drop the image here...</p>
                 ) : (

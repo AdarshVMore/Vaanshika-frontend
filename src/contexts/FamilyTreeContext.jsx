@@ -7,7 +7,7 @@ export const FamilyTreeProvider = ({ children }) => {
   const [showAddFamiliesForm, setShowAddFamiliesForm] = useState(false); // Track form visibility
   const [selectedParentNode, setSelectedParentNode] = useState(null); // Track selected parent node
   const [loading, setLoading] = useState(true);
-  const backendApiUrl = "http://3.109.211.23:3000";
+  const backendApiUrl = "http://13.126.188.240:3001";
   // const backendApiUrl = "http://localhost:3000";
   const [token, setToken] = useState(localStorage.getItem("token" || ""));
   const [familyTreeExist, setFamilyTreeExist] = useState(false);
